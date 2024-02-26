@@ -1,0 +1,2 @@
+execute_script dumb_script
+show

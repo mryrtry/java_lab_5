@@ -1,0 +1,105 @@
+{
+  "history": [
+    {
+      "commandName": "insert"
+    },
+    {
+      "commandName": "insert"
+    },
+    {
+      "commandName": "save"
+    },
+    {
+      "commandName": "info"
+    },
+    {
+      "commandName": "show"
+    },
+    {
+      "commandName": "print_field_descending_cave"
+    },
+    {
+      "commandName": "save"
+    }
+  ],
+  "initTime": "2024-02-14T16:20:59.528107500",
+  "elements": [
+    {
+      "id": "3",
+      "name": "FOREIGN",
+      "coordinates": "null",
+      "creationDate": "2024-02-14T11:10:22.853434400",
+      "age": "32",
+      "weight": "21.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "null"
+    },
+    {
+      "id": "4",
+      "name": "INPUT.TXT",
+      "coordinates": "null",
+      "creationDate": "2024-02-14T11:10:22.854434200",
+      "age": "32",
+      "weight": "21.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "null"
+    },
+    {
+      "id": "5",
+      "name": "MAX",
+      "coordinates": "10.0, 21.0",
+      "creationDate": "2024-02-14T17:36:56.214044500",
+      "age": "32",
+      "weight": "21.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "3, 4"
+    },
+    {
+      "id": "6",
+      "name": "MAX",
+      "coordinates": "10.0, 21.0",
+      "creationDate": "2024-02-14T17:36:56.215042900",
+      "age": "32",
+      "weight": "21.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "4343, 21"
+    },
+    {
+      "id": "7",
+      "name": "MAX",
+      "coordinates": "10.0, 21.0",
+      "creationDate": "2024-02-14T17:36:56.216044700",
+      "age": "32",
+      "weight": "21.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "6, 321"
+    },
+    {
+      "id": "8",
+      "name": "MAX",
+      "coordinates": "10.0, 21.0",
+      "creationDate": "2024-02-14T17:36:56.217042500",
+      "age": "32",
+      "weight": "32.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "1, 423"
+    },
+    {
+      "id": "9",
+      "name": "MAX",
+      "coordinates": "10.0, 21.0",
+      "creationDate": "2024-02-14T17:36:56.218042300",
+      "age": "32",
+      "weight": "21.0",
+      "speaking": "null",
+      "type": "null",
+      "cave": "12, 10"
+    }
+  ]
+}
