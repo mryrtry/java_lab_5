@@ -6,7 +6,7 @@ import java.io.File;
 
 public class ConsoleApp {
     static  {
-        new ConsoleImplementation(System.in, System.out, new DataProviderImplementation(new File("/Projcets/Java Projects/Console Application Lab-5-2/src/Data/data.json"))).start();
+        new ConsoleImplementation(System.in, System.out, new DataProviderImplementation(new File("save_file.json"))).start();
 
     }
     public static void main(String[] args) {}

@@ -22,11 +22,33 @@ public class ConsoleImplementation extends Console {
         this.reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(inputStream), StandardCharsets.UTF_8));
         this.standartReader = reader;
 
+        // Стек вызова скриптов
+        this.lastScriptsNames = new ArrayList<>();
+        this.lastScripts = new HashMap<>();
+
         // Настраиваем вывод
         this.writer = new BufferedWriter(new OutputStreamWriter(new BufferedOutputStream(outputStream), StandardCharsets.UTF_8));
 
         // Получаем DataProvider и данные
         this.dataProvider = dataProvider;
+
+        if (!dataProvider.isTempClear()) {
+            println("Обнаружены не сохраненные изменения с последнего запуска. Восстановить? Yes / No");
+
+            try {
+                if (reader.readLine().equalsIgnoreCase("Yes")) {
+
+                    dataProvider.saveTemp();
+                    println("Изменения сохранены.");
+                    dataProvider.clearTempFile();
+                } else {
+                    println("Пропущено.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         this.commandsHistory = dataProvider.loadHistory();
 
         // Инициализация менеджера коллекции
@@ -82,7 +104,26 @@ public class ConsoleImplementation extends Console {
 
         if (instruction.isEmpty()) { println("app: Пустой ввод."); }
         else if (commands.containsKey(instruction)) {
-            pushToHistory(commands.get(instruction));
+            if (!instruction.equals("exit"))
+                pushToHistory(commands.get(instruction));
+            if (instruction.equals("execute_script"))
+                try {
+                    String newScriptInputFileName = arguments.get(0);
+                    BufferedReader newScriptInput = new BufferedReader(new FileReader(newScriptInputFileName + ".txt"));
+                    if (lastScripts.isEmpty() || !lastScripts.containsKey(newScriptInputFileName)) {
+                        lastScripts.put(newScriptInputFileName, newScriptInput);
+                        lastScriptsNames.add(newScriptInputFileName);
+                    }
+                    else {
+                        println("execute_script: Recursion found.");
+                        lastScripts.clear();
+                        return;
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    println("File not found");
+                    return;
+                }
             try {
                 if (reader != standartReader)
                     readingFromFile = true;
@@ -109,17 +150,34 @@ public class ConsoleImplementation extends Console {
 
     @Override
     public void start() {
+
         while (true) {
             try {
                 if (standartReader == reader) print(prompt);
                 String command = reader.readLine();
                 validateCommand(command);
+                dataProvider.temporarySaveCondition(elementService.getUnparsedInitTime(), elementService.getCollection(), commandsHistory);
+
             } catch (IOException e) {
                 System.err.println("Input Stream Exception.\n");
                 e.printStackTrace();
             } catch (NullPointerException e) {
-                println("Выполнение скрипта завершено.");
-                reader = standartReader;
+
+                // Обработка смены скриптов
+
+                if (!lastScripts.isEmpty()) {
+                    lastScripts.remove(lastScriptsNames.get(lastScriptsNames.size() - 1));
+                    lastScriptsNames.remove(lastScriptsNames.size() - 1);
+
+                    if (!lastScripts.isEmpty()) {
+                        this.reader = lastScripts.get(lastScriptsNames.get(lastScriptsNames.size() - 1));
+                    }
+                }
+
+                if (lastScripts.isEmpty()) {
+                    println("Выполнение скрипта завершено.");
+                    this.reader = standartReader;
+                }
             }
         }
     }
@@ -128,6 +186,17 @@ public class ConsoleImplementation extends Console {
     public String readLine() {
         try {
             return reader.readLine();
+        } catch (IOException e) {
+            System.err.println("Input Stream Exception.\n");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String readLine(BufferedReader fileReader) {
+        try {
+            return fileReader.readLine();
         } catch (IOException e) {
             System.err.println("Input Stream Exception.\n");
             e.printStackTrace();

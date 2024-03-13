@@ -13,5 +13,9 @@ public interface DataProvider {
     ArrayList<String> loadHistory();
     LocalDateTime loadCollectionInitTime();
     void saveCondition(LocalDateTime initTime, Collection<Element> elements, ArrayList<String> history);
+    void temporarySaveCondition(LocalDateTime initTime, Collection<Element> elements, ArrayList<String> history);
+    void clearTempFile();
+    boolean isTempClear();
+    void saveTemp();
 
 }

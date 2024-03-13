@@ -3,9 +3,11 @@ package Commands;
 import Utility.Command;
 import Utility.CommandResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExecuteScript extends Command {
+
     public ExecuteScript() {
         super("execute_script", "считать и исполнить скрипт из указанного файла", "execute_script {file_name}");
     }
@@ -15,7 +17,7 @@ public class ExecuteScript extends Command {
         if (arguments.size() != 1) throw new ArgumentFormatException(true, useExample);
         else {
             String fileName = arguments.get(0);
-            File file = new File("/Projcets/Java Projects/Console Application Lab-5-2/" + fileName + ".txt");
+            File file = new File(fileName + ".txt");
             try {
                 FileReader fileReader = new FileReader(file);
                 console.println("execute_script: Запущен скрипт " + fileName + ";");

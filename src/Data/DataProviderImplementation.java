@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -15,10 +16,12 @@ public class DataProviderImplementation implements DataProvider {
 
     public static class InvalidFileData extends Exception {}
 
-    private final File loadingFile;
+    private File loadingFile;
+    private final File temporaryFile;
 
     public DataProviderImplementation(File file) {
         this.loadingFile = file;
+        this.temporaryFile = new File("temporary.json");
     }
 
     @Override
@@ -115,9 +118,9 @@ public class DataProviderImplementation implements DataProvider {
         return jsonString.toString();
     }
 
-    private void writeToFile(String string) {
+    private void writeToFile(String string, File file) {
         try {
-            BufferedWriter dataWriter = new BufferedWriter(new FileWriter(loadingFile));
+            BufferedWriter dataWriter = new BufferedWriter(new FileWriter(file));
             dataWriter.write(string);
             dataWriter.flush();
             dataWriter.close();
@@ -126,18 +129,55 @@ public class DataProviderImplementation implements DataProvider {
         }
     }
 
-    private void compileLoadingFile(String history, String initNElements) {
+    private void compileLoadingFile(String history, String initNElements, File file) {
         String textFile = "{\n";
         textFile += history;
         textFile += initNElements;
         textFile += "\n}";
-        writeToFile(textFile);
+        writeToFile(textFile, file);
     }
 
     public void saveCondition(LocalDateTime initTime, Collection<Element> elements, ArrayList<String> history) {
         String jsonInitElements = saveCollection(initTime, elements);
         String jsonHistory = saveHistory(history);
-        compileLoadingFile(jsonHistory, jsonInitElements);
+        compileLoadingFile(jsonHistory, jsonInitElements, loadingFile);
     }
 
+    @Override
+    public void temporarySaveCondition(LocalDateTime initTime, Collection<Element> elements, ArrayList<String> history) {
+        String jsonInitElements = saveCollection(initTime, elements);
+        String jsonHistory = saveHistory(history);
+        compileLoadingFile(jsonHistory, jsonInitElements, temporaryFile);
+    }
+
+    @Override
+    public void clearTempFile() {
+        File file = loadingFile;
+        loadingFile = temporaryFile;
+        writeToFile("", temporaryFile);
+        loadingFile = file;
+    }
+
+    @Override
+    public boolean isTempClear() {
+        return temporaryFile.length() == 0;
+    }
+
+    @Override
+    public void saveTemp() {
+        try {
+            String string2;
+            StringBuilder string = new StringBuilder();
+            FileReader fileReader = new FileReader(temporaryFile);
+            BufferedReader reader = new BufferedReader(fileReader);
+            while(true) {
+                string2 = reader.readLine();
+                if (string2 == null || string2.startsWith("null")) break;
+                else { if (string2 != null) string.append(string2); }
+            }
+            writeToFile(String.valueOf(string), loadingFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

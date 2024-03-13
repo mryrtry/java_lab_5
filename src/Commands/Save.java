@@ -13,6 +13,7 @@ public class Save extends Command {
     public CommandResponse execute(List<String> arguments, boolean fromFile) throws ArgumentFormatException {
         if (arguments.isEmpty()) {
             console.getDataProvider().saveCondition(elementService.getUnparsedInitTime(), elementService.getCollection(), console.getCommandsHistory());
+            console.getDataProvider().clearTempFile();
         } else throw new ArgumentFormatException(false, useExample);
         return new CommandResponse();
     }
