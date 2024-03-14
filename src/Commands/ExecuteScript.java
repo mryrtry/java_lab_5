@@ -12,18 +12,24 @@ public class ExecuteScript extends Command {
         super("execute_script", "считать и исполнить скрипт из указанного файла", "execute_script {file_name}");
     }
 
+    public static class ScriptsRecursionException extends Exception {}
+
     @Override
-    public CommandResponse execute(List<String> arguments, boolean fromFile) throws ArgumentFormatException {
+    public CommandResponse execute(List<String> arguments, boolean fromFile) throws ArgumentFormatException, ScriptsRecursionException {
         if (arguments.size() != 1) throw new ArgumentFormatException(true, useExample);
         else {
             String fileName = arguments.get(0);
-            File file = new File(fileName + ".txt");
+            if (console.lastScriptsNames.contains(fileName)) throw new ScriptsRecursionException();
             try {
-                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
                 console.println("execute_script: Запущен скрипт " + fileName + ";");
-                console.changeInputStream(new BufferedReader(fileReader));
+                console.changeInputStream(bufferedReader);
+
+                console.lastScripts.put(fileName, bufferedReader);
+                console.lastScriptsNames.add(fileName);
+
             } catch (FileNotFoundException e) {
-                console.println("execute_script: Файл '" + fileName + "' не найден или не является файлом формата .txt;");
+                console.println("execute_script: Файл '" + fileName + "' не найден.");
             }
         }
         return new CommandResponse();

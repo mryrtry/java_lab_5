@@ -1,5 +1,7 @@
 package Utility;
 
+import Commands.ExecuteScript;
+
 import java.util.List;
 
 public interface Executable {
@@ -23,5 +25,5 @@ public interface Executable {
         }
     }
 
-    CommandResponse execute(List<String> arguments, boolean readingFromFile) throws ArgumentFormatException, InvalidArgumentException, Console.InvalidScriptArgument;
+    CommandResponse execute(List<String> arguments, boolean readingFromFile) throws ArgumentFormatException, InvalidArgumentException, Console.InvalidScriptArgument, ExecuteScript.ScriptsRecursionException;
 }

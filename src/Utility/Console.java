@@ -5,12 +5,13 @@ import Data.DataProvider;
 import java.io.BufferedReader;import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Stack;
 
 public abstract class Console {
     public static class InvalidScriptArgument extends Exception {}
     public HashMap<String, Command> commands;
     public ArrayList<String> commandsHistory;
-    public ArrayList<String> lastScriptsNames;
+    public Stack<String> lastScriptsNames;
     public HashMap<String, BufferedReader> lastScripts;
     public ArrayList<String> getCommandsHistory() {
         return commandsHistory;

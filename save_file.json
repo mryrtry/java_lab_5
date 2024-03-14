@@ -1,1 +1,29 @@
-{  "history": [    {      "commandName": "clear"    },    {      "commandName": "show"    },    {      "commandName": "info"    },    {      "commandName": "save"    },    {      "commandName": "show"    },    {      "commandName": "show"    },    {      "commandName": "save"    }  ],  "initTime": "2024-02-26T18:53:25.675398400",  "elements": [  ]}
+{
+  "history": [
+    {
+      "commandName": "insert"
+    },
+    {
+      "commandName": "execute_script"
+    },
+    {
+      "commandName": "insert"
+    },
+    {
+      "commandName": "show"
+    },
+    {
+      "commandName": "clear"
+    },
+    {
+      "commandName": "save"
+    },
+    {
+      "commandName": "save"
+    }
+  ],
+  "initTime": "2024-03-13T20:01:08.573130800",
+  "elements": [
+
+  ]
+}

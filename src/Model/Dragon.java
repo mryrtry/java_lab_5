@@ -416,7 +416,7 @@ public class Dragon implements Element {
                 }
             }
 
-            case COORDINATES -> coordinates = new Coordinates(0, 0).updateCoords(console, fromFile);
+            case COORDINATES -> coordinates = new Coordinates(0, 0).updateCords(console, fromFile);
 
             case AGE -> {
                 console.println("{Input: Long} (exit: выход из метода) Введите новое значение поля AGE:");
@@ -496,6 +496,8 @@ public class Dragon implements Element {
             DragonCave inputCave = DragonCave.parseCaveFromStr((String) jsonObject.get("cave"));
             return new Dragon(inputId, inputCreationDate, inputName, inputCoordinates, inputAge, inputWeight, inputSpeaking, inputType, inputCave);
         } catch (NumberFormatException | NullPointerException e) {
+
+            // Повреждение temp / save файла
             throw new DataProviderImplementation.InvalidFileData();
         }
 

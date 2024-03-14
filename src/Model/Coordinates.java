@@ -3,8 +3,6 @@ package Model;
 import Commands.Insert;
 import Utility.Console;
 
-import java.util.ArrayList;
-
 public class Coordinates {
     private final double x;
     private final double y;
@@ -81,7 +79,7 @@ public class Coordinates {
 
     }
 
-    public Coordinates updateCoords(Console console, boolean fromFile) throws Insert.ValidationBreak, Console.InvalidScriptArgument {
+    public Coordinates updateCords(Console console, boolean fromFile) throws Insert.ValidationBreak, Console.InvalidScriptArgument {
         String input;
         double inputX;
         double inputY;

@@ -1,16 +1,16 @@
 {
   "history": [
     {
-      "commandName": "info"
+      "commandName": "insert"
+    },
+    {
+      "commandName": "show"
+    },
+    {
+      "commandName": "clear"
     },
     {
       "commandName": "save"
-    },
-    {
-      "commandName": "show"
-    },
-    {
-      "commandName": "show"
     },
     {
       "commandName": "save"
@@ -22,7 +22,7 @@
       "commandName": "info"
     }
   ],
-  "initTime": "2024-02-26T18:53:25.675398400",
+  "initTime": "2024-03-13T20:01:08.573130800",
   "elements": [
 
   ]

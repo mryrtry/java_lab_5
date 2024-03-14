@@ -7,7 +7,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -29,7 +28,7 @@ public class DataProviderImplementation implements DataProvider {
         Collection<Element> elements = new ArrayList<>();
 
         // Парсим файл
-        JSONObject parsedFile = null;
+        JSONObject parsedFile;
         try {
             parsedFile = (JSONObject) new JSONParser().parse(new FileReader(loadingFile));
         } catch (IOException | ParseException e) {
@@ -56,7 +55,7 @@ public class DataProviderImplementation implements DataProvider {
         ArrayList<String> history = new ArrayList<>();
 
         // Парсим файл
-        JSONObject parsedFile = null;
+        JSONObject parsedFile;
         try {
             parsedFile = (JSONObject) new JSONParser().parse(new FileReader(loadingFile));
         } catch (IOException | ParseException e) {
@@ -80,7 +79,7 @@ public class DataProviderImplementation implements DataProvider {
     public LocalDateTime loadCollectionInitTime() {
 
         // Парсим файл
-        JSONObject parsedFile = null;
+        JSONObject parsedFile;
         try {
             parsedFile = (JSONObject) new JSONParser().parse(new FileReader(loadingFile));
         } catch (IOException | ParseException e) {
@@ -173,7 +172,7 @@ public class DataProviderImplementation implements DataProvider {
             while(true) {
                 string2 = reader.readLine();
                 if (string2 == null || string2.startsWith("null")) break;
-                else { if (string2 != null) string.append(string2); }
+                else { string.append(string2); }
             }
             writeToFile(String.valueOf(string), loadingFile);
         } catch (IOException e) {

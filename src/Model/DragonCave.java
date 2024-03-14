@@ -178,4 +178,8 @@ public class DragonCave implements Comparable<DragonCave> {
     public long getNumberOfTreasures() {
         return numberOfTreasures;
     }
+
+    public long getDepth() {
+        return depth;
+    }
 }
